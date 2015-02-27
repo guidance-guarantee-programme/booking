@@ -1,14 +1,54 @@
 Feature: Find an appointment
   As a call centre agent
   I want to be able to find a customer’s appointment
-  So that I can cancel or reschedule the appointment
+  So that I can cancel, reschedule, or update the appointment
 
-  Scenario: Find an appointment
-    Given I am on the home screen
-    When I search with a customer’s details
-    Then I should be able to see the customer’s appointment in the search results
+  Scenario: Search by reference number
+    Given I am on the call centre home screen
+    And There is an appointment with reference number '1'
+    When I search for an appointment by <reference number>
+    Then I should see <number of search results>
 
-  Scenario: Find an appointment with more than one field
-    Given I have searched with one piece of information
-    When I search with a second piece of information
-    Then I should be able to see the customer’s appointment in a narrower selection of search results
+    Examples:
+      | reference number | number of search results |
+      | 1                | 1                        |
+      | 666              | 0                        |
+      | xxx              | 0                        |
+
+  Scenario: Search by reference number and surname
+    Given I am on the call centre home screen
+    And There is an appointment with reference number '1' for customer with surname 'Smith'
+    When I search for an appointment by <reference number> and <surname>
+    Then I should see <number of search results>
+
+    Examples:
+      | reference number | surname | number of search results |
+      | 1                | Smith   | 1                        |
+
+  Scenario: Search by surname case insensitive
+    Given I am on the call centre home screen
+    And There is an appointment for customer with surname 'Smith'
+    When I search for an appointment by <surname>
+    Then I should see <number of search results>
+
+    Examples:
+      | surname | number of search results |
+      | Smith   | 1                        |
+      | smith   | 1                        |
+
+  Scenario: Search by partial surname
+    Given I am on the call centre home screen
+    And There is an appointment for customer with surname <customer>
+    When I search for an appointment by <surname>
+    Then I should see <number of search results>
+
+    Examples:
+      | customer | surname | number of search results |
+      | Smith    | Smi     | 1                        |
+      | Smith    | ith     | 1                        |
+      | Smith    | mit     | 1                        |
+
+  Scenario: Search by email
+  Scenario: Search by partial email
+  Scenario: Search by surname and email
+  Scenario: Search by surname and date
