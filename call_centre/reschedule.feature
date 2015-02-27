@@ -12,3 +12,7 @@ Feature: Reschedule an appointment
     Given I see the availability calendar
     When I pick a time slot
     Then I should be able to confirm the new time
+
+  Scenario: Reschedule a cancelled appointment
+  Scenario: Reschedule an appointment and move it in the past
+  Scenario: Reschedule an appointment earlier than originally booked
