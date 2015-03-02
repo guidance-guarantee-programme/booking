@@ -13,6 +13,7 @@ Feature: Reschedule an appointment
     When I pick a time slot
     Then I should be able to confirm the new time
 
+  @wip
   Scenario: Reschedule a cancelled appointment
     Given I have found a customer's cancelled appointment
     When I see the customer's details
@@ -28,4 +29,4 @@ Feature: Reschedule an appointment
     Given I have found a customer's appointment
     When I choose to reschedule this appointment
     And when I see the availability calendar
-    Then I should be able to choose an earlier time slot which still has a minimum 2 week waiting time
+    Then I should be able to choose an earlier time slot which still has a minimum waiting time
