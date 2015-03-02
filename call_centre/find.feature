@@ -48,7 +48,61 @@ Feature: Find an appointment
       | Smith    | ith     | 1                        |
       | Smith    | mit     | 1                        |
 
-  Scenario: Search by email
+  Scenario: Search by full email
+    Given I am on the call centre home screen
+    And there is an appointment for customer with email address <email>
+    When I search for an appointment by <email>
+    Then I should see <number of search results>
+  
+  Examples:
+    | email               | number of search results |
+    | j.smith@example.com | 1                        |
+    | j.bloggs@123.com    | 1                        |
+  
+  
   Scenario: Search by partial email
+    Given I am on the call centre home screen
+    And there is an appointment for customer with email address <email>
+    When I search for an appointment by <email search>
+    Then I should see <number of search results>
+    
+  Examples:
+    | email                 | email search     | number of search results |
+    | j.smith@example.com   | ith@examp        | 1                        |
+    | j.smith@example.com   | j.smith@         | 1                        |
+    | j.smith@example.com   | j.smith.com      | 0                        |
+  
+  
   Scenario: Search by surname and email
+    Given I am on the call centre home screen
+    And there is an appointment for customer with surname <customer> and <email>
+    When I search for appointment by <customer> and <email>
+    Then I should see <number of search results>
+    
+  Examples:
+    | customer | email               | number of search results |
+    | Smith    | j.smith@example.com | 1                        |
+    | Bloggs   | j.bloggs@123.com    | 1                        |
+  
   Scenario: Search by surname and date
+    Given I am on the call centre home screen
+    And there is an appointment for customer with surname <customer> at <date>
+    When I search for an appointment by <customer> and <search date>
+    Then I should see <number of search results>
+    
+  Examples:
+    | customer | date          | search date   | number of search results |
+    | Smith    | 2 March 2015  | 2 March 2015  | 1                        |
+    | Smith    | 2 March 2015  | 16 April 2015 | 0                        |
+  
+   Scenario: Search by surname and date range
+    Given I am on the call centre home screen
+    And there is an appointment for customer with surname <customer> at <date range>
+    When I search for an appointment by <customer> and <search date range>
+    Then I should see <number of search results>
+  
+  Examples:
+    | customer | date range    | search date range | number of search results |
+    | Smith    | last 2 weeks  | last 2 weeks      | 1                        |
+    | Smith    | last 2 weeks  | next 2 weeks      | 0                        |
+  
