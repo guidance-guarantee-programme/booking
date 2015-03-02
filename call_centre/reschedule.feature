@@ -14,5 +14,18 @@ Feature: Reschedule an appointment
     Then I should be able to confirm the new time
 
   Scenario: Reschedule a cancelled appointment
-  Scenario: Reschedule an appointment and move it in the past
+    Given I have found a customer's cancelled appointment
+    When I see the customer's details
+    Then I should not be able to reschedule the appointment
+  
+  Scenario: Reschedule an appointment in the past
+    Given I have found a customer's appointment
+    When I choose to reschedule this appointment
+    And when I see the availability calendar
+    Then I should not be able to choose a time slot in the past
+  
   Scenario: Reschedule an appointment earlier than originally booked
+    Given I have found a customer's appointment
+    When I choose to reschedule this appointment
+    And when I see the availability calendar
+    Then I should be able to choose an earlier time slot which still has a minimum 2 week waiting time
