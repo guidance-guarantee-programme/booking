@@ -50,3 +50,35 @@ Feature: Customer details
       | C4LLME  | appointment phone     |
       | !@£$!   | appointment phone     |
       | whatevs | reminder mobile phone |
+
+  Scenario: International phone numbers
+    Given I see the customer details form
+    When I want to enter an international phone number
+    Then I should be able to select the country code
+
+  Scenario: Default phone number country code
+    Given I see the customer detail form
+    Then The default country code for phone numbers should be UK (+44)
+
+  Scenario: Enter UK phone number
+    Given I see the customer details form
+    When I enter a <phone number> with the default UK country code
+    Then The <correct number> should appear in the customer's record
+    And The <correct number> should appear in any emails sent to the customer
+
+    Examples:
+      | phone number | correct number |
+      | 07460 123456 | +44 7460123456 |
+      | 0207 1234567 | +44 2071234567 |
+
+  Scenario: Enter international phone number
+    Given I see the customer details form
+    When I enter an <international phone number>
+    Then The <correct number> should appear in the customer's record
+    And The <correct number> should appear in any emails sent to the customer
+
+    Examples:
+      | international phone number | correct number |
+      | +30 2101234567             | +30 2101234567 |
+      | +1284 4943134              | +1284 4943134  |
+      | +39 022136400              | +39 022136400  |
